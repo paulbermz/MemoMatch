@@ -1,0 +1,271 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1313ce, #ff6f61); /* Gradient color */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.game-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #ff6f61, #1313ce); /* Gradient color */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-gap: 15px;
+  margin: 20px auto;
+}
+
+.card {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card::after {
+  content: "❓"; /* Question mark */
+  font-size: 50px;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.7; /* Adjust opacity for aesthetics */
+  transition: opacity 0.3s;
+}
+
+.card-flipped::after {
+  display: none; /* Hide the question mark */
+}
+
+.card:hover::after {
+  opacity: 1; /* Full opacity on hover */
+}
+
+.card.flip {
+  background-color: #f4f4f4;
+  transform: rotateY(180deg);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: none;
+}
+
+.card.flip img {
+  display: block;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.card.match {
+  animation: matchAnimation 0.5s forwards;
+}
+
+@keyframes matchAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.card.shake {
+  animation: shake 0.5s forwards;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.win {
+  animation: winAnimation 1s infinite; /* Repeat for a celebratory effect */
+}
+
+.controls {
+  color: #f0f0f0;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  margin-left: 10%;
+  justify-content: center;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+  margin: 0 5px; /* Adjust spacing between buttons */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.timer-and-moves {
+  padding: 10px;
+  margin-top: 15px; /* Adjusted margin to create space below the buttons */
+  text-align: center;
+  font-size: 18px; /* Adjust font size for better visibility */
+}
+
+.timer-and-moves p {
+  margin: 10px 0; /* Margin between time and moves labels */
+}
+
+.card[data-difficulty="easy"] {
+  border-color: #28a745; /* Green for easy */
+}
+
+.card[data-difficulty="medium"] {
+  border-color: #ffc107; /* Yellow for medium */
+}
+
+.card[data-difficulty="hard"] {
+  border-color: #dc3545; /* Red for hard */
+}
+
+@media (max-width: 600px) {
+  .card {
+    width: 80px;
+    height: 80px;
+  }
+
+  #timer,
+  #move-counter {
+    font-size: 1em;
+  }
+}
+
+#difficulty {
+  width: 50%;
+  border-radius: 5px;
+  border: 2px solid #007bff;
+  background-color: #f8f9fa;
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+#difficulty:focus {
+  outline: none;
+  border-color: #0056b3; /* Darker blue when focused */
+}
+
+#difficulty option {
+  padding: 10px;
+}
+
+.modal-content {
+  background-color: #ffffff;
+}
+
+#gameOverModal .modal-title {
+  color: #dc3545;
+}
+
+#gameOverModal .btn-primary {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+#gameOverModal .btn-secondary {
+  background-color: #6c757d;
+  border-color: #ff0000;
+}
+
+/* Centering the progress circle using Flexbox */
+#progress-circle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 9999; /* Ensure it's on top */
+}
+
+/* Circular progress bar */
+.progress-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 8px solid lightgray;
+  border-top-color: blue;
+  animation: spin 2s linear infinite;
+  position: relative;
+}
+
+/* Inner circle (optional styling) */
+.circle-inner {
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Spinner animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.list-group-item {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}

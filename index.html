@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MemoMatch</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="icon" href="memomatch.png.png" type="memomatch.png.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="controls d-flex align-items-center">
+        <!-- Add Instruction Button -->
+        <button
+          id="instruction-button"
+          class="btn btn-info mr-2"
+          onclick="openInstructions()"
+        >
+          How to play?
+        </button>
+
+        <!-- Difficulty Dropdown -->
+        <select
+          id="difficulty"
+          class="custom-select"
+          onchange="setDifficulty()"
+        >
+          <option value="easy">Easy (4 pairs)</option>
+          <option value="medium">Medium (8 pairs)</option>
+          <option value="hard">Hard (12 pairs)</option>
+        </select>
+      </div>
+
+      <div id="game-board" class="game-board"></div>
+      <div class="controls">
+        <p style="margin-right: 10px">Time: <span id="timer">00:00</span></p>
+        <p style="margin-left: 10px">Moves: <span id="move-counter">0</span></p>
+      </div>
+      <div>
+        <!-- Button to Manually Trigger High Score Modal for Testing -->
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="openHighScoreModal()"
+        >
+          View High Scores
+        </button>
+        <!-- Add this button in your HTML to reset high scores -->
+        <button id="reset-scores-button" class="btn btn-danger">
+          Delete Scores
+        </button>
+        <button id="reset-button" class="btn btn-secondary">Reset Game</button>
+      </div>
+    </div>
+
+    <!-- HTML for the circular progress bar -->
+    <div id="progress-circle-container" style="display: none">
+      <div class="progress-circle" id="progress-circle">
+        <div class="circle-inner"></div>
+      </div>
+    </div>
+
+    <!-- Win Modal -->
+    <div
+      class="modal fade"
+      id="winModal"
+      tabindex="-1"
+      aria-labelledby="winModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="winModalLabel">
+              CONGRATULATIONS! YOU WIN!
+            </h5>
+          </div>
+          <div class="modal-body">
+            Your score: <span id="final-score"></span>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="play-again-button"
+            >
+              Play Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div
+      class="modal fade"
+      id="gameOverModal"
+      tabindex="-1"
+      aria-labelledby="gameOverModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="gameOverModalLabel">GAME OVER!</h5>
+          </div>
+          <div class="modal-body">
+            <p>Time's up! You didn't finish the game in time.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="playAgain()">
+              Play Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- High Score Modal -->
+    <div
+      class="modal fade"
+      id="highScoreModal"
+      tabindex="-1"
+      aria-labelledby="highScoreModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="highScoreModalLabel">High Scores</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul id="high-score-list" class="list-group">
+              <!-- High scores will be dynamically added here -->
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <audio id="background-music" loop>
+      <source src="playing.mp3.wav" type="audio/mpeg" />
+    </audio>
+
+    <audio id="winSound" src="winsound.mp3.wav" preload="auto"></audio>
+    <audio id="cardFlipSound" src="cardflip.mp3.wav" preload="auto"></audio>
+    <audio id="gameOverSound" src="gameover.mp3.wav" preload="auto"></audio>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

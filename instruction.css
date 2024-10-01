@@ -1,0 +1,100 @@
+/* instructions.css */
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1313ce, #ff6f61); /* Gradient color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 800px;
+  width: 90%; /* Make it responsive by using percentage width */
+  margin: 20px auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #ff6f61, #1313ce); /* Gradient color */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: 900;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-align: center;
+}
+
+p {
+  font-size: 1.5em;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+ul {
+  color: #ffffff;
+  font-size: 1.3em;
+  margin-left: 20px;
+  padding-left: 10px;
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+
+button {
+  display: block;
+  width: 40%; /* Adjust button size */
+  margin: 20px auto; /* Center the button with auto left-right margin */
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center; /* Ensure text is centered inside the button */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8em;
+  }
+
+  p,
+  ul {
+    font-size: 1.2em;
+  }
+
+  button {
+    width: 90%; /* Make button full width on small screens */
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5em;
+  }
+
+  p,
+  ul {
+    font-size: 1em;
+  }
+
+  button {
+    width: 100%; /* Make button full width for very small screens */
+    font-size: 0.9em;
+  }
+}
