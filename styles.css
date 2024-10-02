@@ -20,10 +20,7 @@ body {
 
 .game-board {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(100px, 1fr)
-  ); /* Responsive grid */
+  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
   gap: 10px; /* Space between cards */
   margin-top: 20px;
   margin: 20px auto;
