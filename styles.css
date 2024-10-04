@@ -10,7 +10,7 @@ body {
 }
 
 .game-container {
-  max-width: 800px;
+  width: 800px;
   margin: auto;
   padding: 20px;
   background: linear-gradient(135deg, #ff6f61, #1313ce); /* Gradient color */
