@@ -126,7 +126,7 @@ body {
   margin-top: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* Center the buttons horizontally */
   flex-wrap: wrap; /* Allow wrapping for better layout on small screens */
 }
 
@@ -139,7 +139,7 @@ button {
   border: none;
   border-radius: 5px;
   transition: background-color 0.2s;
-  margin: 0 5px; /* Spacing between buttons */
+  margin: 5px; /* Adjusted to keep spacing consistent */
   min-width: 120px; /* Minimum width for button to ensure consistency */
 }
 
@@ -160,10 +160,11 @@ button:hover {
   }
 
   .controls {
-    justify-content: space-around; /* Distribute buttons evenly on small screens */
+    justify-content: center; /* Center content on small screens */
     margin: 10px 0; /* Space above and below the controls */
   }
 }
+
 
 .timer-and-moves {
   padding: 10px; /* Slightly increased padding for better spacing */
