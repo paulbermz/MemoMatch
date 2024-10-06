@@ -148,14 +148,14 @@ button:hover {
 }
 
 .timer-and-moves {
-  padding: 10px;
-  margin-top: 15px; /* Adjusted margin to create space below the buttons */
-  text-align: center;
-  font-size: 18px; /* Adjust font size for better visibility */
+  padding: 5px;
+  margin-top: 10px; /* Adjusted margin to create space below the buttons */
+  text-align: start;
+  font-size: 10px; /* Adjust font size for better visibility */
 }
 
 .timer-and-moves p {
-  margin: 10px 0; /* Margin between time and moves labels */
+  margin: 5px 0; /* Margin between time and moves labels */
 }
 
 .card[data-difficulty="easy"] {
