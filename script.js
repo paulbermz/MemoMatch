@@ -158,7 +158,7 @@ function changeDifficulty(newDifficulty) {
     difficulty = newDifficulty; // Set the new difficulty
 
     // Reset the level whenever the difficulty is changed
-    resetLevel();
+    // resetLevel();
 
     // Logic to update game board or settings based on the new difficulty can be added here
     const { pairs, color, timeLimit } = difficultySettings[difficulty];
