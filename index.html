@@ -36,24 +36,25 @@
       </div>
 
       <div id="game-board" class="game-board"></div>
-      <div class="controls">
-        <p style="margin-right: 10px">Time: <span id="timer">00:00</span></p>
-        <p style="margin-left: 10px">Moves: <span id="move-counter">0</span></p>
-      </div>
-      <div>
+<div class="controls">
+  <p style="margin-right: 10px">Time: <span id="timer">00:00</span></p>
+  <p style="margin-left: 10px; margin-right: 10px;">Moves: <span id="move-counter">0</span></p>
+  <p style="margin-left: 10px;">Level: <span id="level-display">1</span></p> <!-- Added Level display here -->
+</div>
+
         <!-- Button to Manually Trigger High Score Modal for Testing -->
         <button
           type="button"
           class="btn btn-primary"
           onclick="openHighScoreModal()"
         >
-          View Scores
+          View High Scores
         </button>
         <!-- Add this button in your HTML to reset high scores -->
         <button id="reset-scores-button" class="btn btn-danger">
           Delete Scores
         </button>
-        <button id="reset-button" class="btn btn-secondary">Reset</button>
+        <button id="reset-button" class="btn btn-secondary">Reset Game</button>
       </div>
     </div>
 
@@ -86,7 +87,39 @@
             <button
               type="button"
               class="btn btn-primary"
-              id="play-again-button"
+              id="play-again-win"
+            >
+              Play Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Congratulations Modal -->
+    <div
+      id="congratsModal"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="congratsModalLabel"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="congratsModalLabel">
+              Congratulations!
+            </h5>
+          </div>
+          <div class="modal-body">
+            <p>You've completed all levels! 🎉🏆</p>
+            <p>Do you want to play again?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              id="play-again-congrats"
+              class="btn btn-primary"
             >
               Play Again
             </button>
@@ -117,7 +150,7 @@
             </button>
           </div>
         </div>
-      </div>
+      </div> 
     </div>
 
     <!-- High Score Modal -->
@@ -162,12 +195,13 @@
     <audio id="background-music" loop>
       <source src="playing.mp3.wav" type="audio/mpeg" />
     </audio>
-
+    <audio id="congratsSound" src="congratsSound.mp3.mp3" preload="auto"></audio>
     <audio id="winSound" src="winsound.mp3.wav" preload="auto"></audio>
     <audio id="cardFlipSound" src="cardflip.mp3.wav" preload="auto"></audio>
     <audio id="gameOverSound" src="gameover.mp3.wav" preload="auto"></audio>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="path/to/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
