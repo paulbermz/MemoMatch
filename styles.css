@@ -127,11 +127,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap; /* Allows buttons to wrap on small screens */
 }
 
 button {
-  margin-left: 10%;
-  justify-content: center;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
@@ -140,7 +139,21 @@ button {
   border: none;
   border-radius: 5px;
   transition: background-color 0.2s;
-  margin: 0 5px; /* Adjust spacing between buttons */
+  margin: 5px; /* Consistent margin around each button */
+  flex: 1 1 45%; /* Allows two buttons per row with some flexibility */
+  max-width: 200px; /* Prevents buttons from becoming too wide */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 480px) {
+  button {
+    flex: 1 1 100%; /* On mobile, buttons take full width */
+    max-width: none; /* Remove max-width on mobile */
+    font-size: 14px; /* Slightly smaller font on small screens */
+  }
 }
 
 button:hover {
@@ -148,14 +161,32 @@ button:hover {
 }
 
 .timer-and-moves {
-  padding: 5px;
-  margin-top: 10px; /* Adjusted margin to create space below the buttons */
-  text-align: start;
-  font-size: 10px; /* Adjust font size for better visibility */
+  padding: 10px; /* Slightly increased padding for better spacing */
+  margin-top: 15px; /* Create more space below the buttons */
+  text-align: center; /* Center-align for better layout on small screens */
+  font-size: 14px; /* Increase font size for better readability */
+  display: flex;
+  justify-content: space-around; /* Distribute time and moves labels evenly */
+  flex-wrap: wrap; /* Allow labels to wrap on smaller screens */
 }
 
 .timer-and-moves p {
-  margin: 5px 0; /* Margin between time and moves labels */
+  margin: 5px 10px; /* Add margin for more spacing between elements */
+  font-size: 1em; /* Keep font size relative for better scaling */
+}
+
+@media (max-width: 480px) {
+  .timer-and-moves {
+    font-size: 12px; /* Decrease font size for small screens */
+    flex-direction: column; /* Stack time and moves vertically */
+    align-items: center; /* Center-align on smaller screens */
+    margin-top: 10px;
+  }
+
+  .timer-and-moves p {
+    margin: 5px 0; /* Reduce margin for tighter vertical spacing */
+    text-align: center; /* Ensure text is centered on mobile */
+  }
 }
 
 .card[data-difficulty="easy"] {
