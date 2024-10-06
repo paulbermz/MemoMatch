@@ -139,13 +139,31 @@ button {
   border: none;
   border-radius: 5px;
   transition: background-color 0.2s;
-  margin: 0 5px; /* Spacing between buttons */
-  min-width: 120px; /* Minimum width for button to ensure consistency */
+  margin: 5px; /* Uniform spacing between buttons */
+  flex: 1 1 calc(30% - 10px); /* Responsive buttons, 3 per row */
+  min-width: 100px; /* Minimum width for buttons for better touch targets */
+  max-width: 150px; /* Maximum width to prevent buttons from being too large */
 }
 
+/* Hover effect */
 button:hover {
   background-color: #0056b3;
 }
+
+/* Responsive styles for mobile */
+@media (max-width: 600px) {
+  button {
+    flex: 1 1 calc(45% - 10px); /* 2 buttons per row on smaller screens */
+    margin: 5px 0; /* Margin for vertical spacing */
+  }
+}
+
+@media (max-width: 400px) {
+  button {
+    flex: 1 1 calc(100% - 10px); /* Stack buttons vertically on very small screens */
+  }
+}
+
 
 #instruction-button {
   margin-right: 10px; /* Space between the button and the dropdown */
