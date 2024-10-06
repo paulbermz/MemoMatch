@@ -168,30 +168,30 @@ button:hover {
 .timer-and-moves {
   padding: 10px; /* Slightly increased padding for better spacing */
   margin-top: 15px; /* Create more space below the buttons */
-  text-align: center; /* Center-align for better layout on small screens */
+  text-align: center; /* Center-align for better layout */
   font-size: 14px; /* Increase font size for better readability */
   display: flex;
-  justify-content: space-between; /* Distribute time, moves, and level evenly */
-  flex-wrap: nowrap; /* Prevent wrapping */
+  justify-content: space-between; /* Distribute time, moves, and level evenly on larger screens */
+  flex-wrap: nowrap; /* Prevent wrapping on larger screens */
 }
 
+/* The p tags inside .timer-and-moves */
 .timer-and-moves p {
   margin: 5px 10px; /* Add margin for more spacing between elements */
   font-size: 1em; /* Keep font size relative for better scaling */
 }
 
-@media (max-width: 480px) {
+/* Responsive layout for small screens */
+@media (max-width: 600px) {
   .timer-and-moves {
-    font-size: 12px; /* Decrease font size for small screens */
-    flex-direction: row; /* Keep items in a row */
-    align-items: center; /* Center-align on smaller screens */
-    margin-top: 10px;
-    justify-content: space-between; /* Space evenly on small screens */
+    flex-direction: column; /* Stack items vertically on small screens */
+    align-items: center; /* Center-align items vertically */
+    justify-content: center; /* Center the content */
   }
 
   .timer-and-moves p {
-    margin: 5px 0; /* Reduce margin for tighter vertical spacing */
-    text-align: center; /* Ensure text is centered on mobile */
+    margin: 10px 0; /* Adjust margin for spacing between the rows */
+    text-align: center; /* Ensure text is centered */
   }
 }
 
@@ -199,15 +199,32 @@ button:hover {
 .button-container {
   display: flex;
   flex-direction: row; /* Arrange buttons in a row */
-  justify-content: space-around; /* Distribute buttons evenly */
+  justify-content: center; /* Center buttons in the container */
   flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
   margin-top: 15px; /* Space above the button container */
 }
 
 .button-container button {
   margin: 5px; /* Space between buttons */
-  flex: 1 1 calc(33.33% - 10px); /* Responsive buttons, three per row */
+  flex: 1 1 calc(30% - 10px); /* Responsive buttons, approximately three per row */
+  min-width: 100px; /* Set a minimum width for buttons for better touch targets */
+  max-width: 150px; /* Set a maximum width to avoid overly large buttons */
 }
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .button-container button {
+    flex: 1 1 calc(45% - 10px); /* Two buttons per row on smaller screens */
+  }
+}
+
+@media (max-width: 400px) {
+  .button-container button {
+    flex: 1 1 calc(100% - 10px); /* Stack buttons vertically on very small screens */
+    margin: 5px 0; /* Space between stacked buttons */
+  }
+}
+
 
 .card[data-difficulty="easy"] {
   border-color: #28a745; /* Green for easy */
