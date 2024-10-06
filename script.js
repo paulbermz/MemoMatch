@@ -11,6 +11,18 @@ const cardsArray = [
   { name: "J", img: "meme10.png" },
   { name: "K", img: "meme11.png" },
   { name: "L", img: "meme12.png" },
+  { name: "M", img: "meme13.png" },
+  { name: "N", img: "meme14.png" },
+  { name: "O", img: "meme15.png" },
+  { name: "P", img: "meme16.png" },
+  { name: "Q", img: "meme17.png" },
+  { name: "R", img: "meme18.png" },
+  { name: "S", img: "meme19.png" },
+  { name: "T", img: "meme20.png" },
+  { name: "U", img: "meme21.png" },
+  { name: "V", img: "meme22.png" },
+  { name: "W", img: "meme23.png" },
+  { name: "X", img: "meme24.png" },
 ];
 
 let gameBoard = document.getElementById("game-board");
@@ -25,6 +37,101 @@ let moves = 0;
 let timer = null;
 let seconds = 0;
 let matchedPairs = 0;
+const maxLevel = 10; // Set max level to 10 for each difficulty
+
+// Function to generate an array of card colors for each level
+function generateCardColors(maxLevel) {
+  const colors = [];
+  for (let i = 0; i < maxLevel; i++) {
+    colors.push(`hsl(${(i * 360) / maxLevel}, 100%, 50%)`); // HSL for distinct colors
+  }
+  return colors;
+}
+
+// Function to set card color based on the current level
+function setCardColors(level) {
+  const cardElements = document.querySelectorAll(".card");
+  const color = cardColors[level - 1]; // Get the color for the current level
+  cardElements.forEach((card) => {
+    card.style.backgroundColor = color; // Apply color to the cards
+  });
+}
+
+// Function to refresh card images based on the current level
+function refreshCardImages(level) {
+  const numberOfPairs = Math.min(6 + level, 20); // Increase number of card pairs by level
+  shuffleAndAssignCards(numberOfPairs);
+}
+
+// Function to show congratulations modal
+function showCongratulationsModal() {
+  // Stop background music if running
+  stopBackgroundMusic();
+
+  // Show the Congratulations Modal
+  $("#congratsModal").modal({
+    backdrop: "static",
+    keyboard: false,
+  });
+
+  const playAgainButton = document.getElementById("play-again-congrats");
+
+  function playAgainAfterCongrats() {
+    currentLevel = 1; // Reset the level back to 1
+    resetGame(); // Reset the game state
+    createBoard(); // Recreate the board for a new game
+    $("#congratsModal").modal("hide"); // Hide the modal
+    startBackgroundMusic(); // Start the background music again
+  }
+
+  playAgainButton.removeEventListener("click", playAgainAfterCongrats);
+  playAgainButton.addEventListener("click", playAgainAfterCongrats);
+}
+
+let emojiInterval; // Global variable to store the interval ID for emoji rain
+
+// Function to start the emoji rain
+function rainOfEmojis() {
+  const emojiContainer = document.createElement("div");
+  emojiContainer.classList.add("emoji-rain-container");
+  document.body.appendChild(emojiContainer);
+
+  const emojis = ["🎉", "🎈", "🥳", "👏", "✨"];
+
+  // Function to create a single emoji element
+  function createEmoji() {
+    const emoji = document.createElement("div");
+    emoji.classList.add("emoji");
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * 100 + "vw"; // Random horizontal position
+    emoji.style.animationDuration = Math.random() * 2 + 3 + "s"; // Random falling speed
+    emojiContainer.appendChild(emoji);
+
+    // Remove the emoji after it falls
+    setTimeout(() => {
+      emoji.remove();
+    }, 5000); // Match this duration to the CSS animation duration
+  }
+
+  // Start the interval to create emojis every 300ms
+  emojiInterval = setInterval(createEmoji, 300);
+}
+
+// Function to stop the emoji rain
+function stopRainOfEmojis() {
+  // Clear the interval to stop creating new emojis
+  clearInterval(emojiInterval);
+
+  // Remove all emoji elements from the screen
+  const emojis = document.querySelectorAll(".emoji");
+  emojis.forEach((emoji) => emoji.remove());
+
+  // Optionally, remove the emoji container from the DOM
+  const emojiContainer = document.querySelector(".emoji-rain-container");
+  if (emojiContainer) {
+    emojiContainer.remove();
+  }
+}
 
 let flipSound = new Audio("cardflip.mp3.wav");
 let winSound = new Audio("winsound.mp3.wav");
@@ -38,17 +145,57 @@ const difficultySettings = {
   hard: { pairs: 12, color: "black", timeLimit: 90 }, // 1 minute 30 seconds
 };
 
+// Function to reset the level and other related settings based on selected difficulty
+function resetLevel() {
+  currentLevel = 1; // Reset current level to 1
+  document.getElementById("level-display").textContent = currentLevel; // Update the level display in the UI
+  // Additional logic to reset game settings based on the difficulty can be added here if necessary
+}
+
+// Function to change the difficulty
+function changeDifficulty(newDifficulty) {
+  if (difficultySettings[newDifficulty]) {
+    difficulty = newDifficulty; // Set the new difficulty
+
+    // Reset the level whenever the difficulty is changed
+    resetLevel();
+
+    // Logic to update game board or settings based on the new difficulty can be added here
+    const { pairs, color, timeLimit } = difficultySettings[difficulty];
+
+    // Example of applying the new difficulty settings
+    // Create game board with new pairs and color
+    createBoard(pairs, color);
+    // Start a new timer based on the time limit
+    startTimer(timeLimit);
+  }
+}
+
+// Dynamically select images from the cardsArray
 function shuffleCards() {
   let cards = [
     ...cardsArray.slice(0, difficultySettings[difficulty].pairs),
     ...cardsArray.slice(0, difficultySettings[difficulty].pairs),
-  ]; // Duplicate the cards for matching
-  return cards.sort(() => 0.5 - Math.random());
+  ];
+
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+
+  return cards;
+}
+
+// Change the images after each game reset or win to avoid repetition
+function refreshCardImages() {
+  // Shuffle the array to pick new images
+  cardsArray.sort(() => Math.random() - 0.5);
 }
 
 function setDifficulty() {
   difficulty = document.getElementById("difficulty").value;
   resetGame(); // Reset the game when difficulty changes
+  resetLevel(); // Reset the level whenever the difficulty is changed
 }
 
 function createBoard() {
@@ -117,6 +264,7 @@ function resetGame() {
   matchedPairs = 0;
   moveCounter.innerText = moves;
   resetTimer(); // Reset the timer display
+  refreshCardImages(); // Change the card images to keep the game fresh
   createBoard(); // Recreate the game board
   displayHighScores(); // Display high scores on reset
   startTimer(); // Start the timer for the new game
@@ -139,6 +287,8 @@ function flipCard() {
     cardImage.classList.remove("hidden");
     this.classList.add("card-flipped"); // Hide the question mark
     startTimer();
+    // Shuffle and refresh the card images to avoid repetition
+    refreshCardImages(); // Shuffle the images for a new set of cards
     startBackgroundMusic(); // Start playing background music when the game starts
     return;
   }
@@ -213,8 +363,13 @@ function calculateScore() {
   return Math.min(calculatedScore, 1000);
 }
 
+let currentLevel = 1; // Start at level 1
+
 // Function to show the Win Modal when the user wins
 function showWinModal(score) {
+  const playAgainButton = document.getElementById("play-again-win");
+  rainOfEmojis(); // Start the rain of emojis
+
   // Update the final score in the Win Modal
   document.getElementById("final-score").textContent = score;
 
@@ -227,18 +382,33 @@ function showWinModal(score) {
     keyboard: false, // Disable closing via the ESC key
   });
 
-  const playAgainButton = document.getElementById("play-again-button");
+  // Increment the level only if it's less than the maximum level
+  if (currentLevel < maxLevel) {
+    currentLevel++; // Increment the level by 1
+    // Update the level display in the UI
+    document.getElementById("level-display").textContent = `${currentLevel}`;
+  }
+
+  // If the current level is the maximum level, show the Congratulations modal
+  if (currentLevel === maxLevel) {
+    showCongratulationsModal(); // Show congratulations modal when max level is reached
+    rainOfEmojis(); // Start the rain of emojis
+    return; // Stop further execution since the game is complete
+  }
 
   // Define the playAgain function
   function playAgain() {
+    // Stop the emoji rain
+    stopRainOfEmojis();
     // Add the current score to the high scores
     addScore(score); // Add the score to the high score list
 
     // Automatically display the updated high scores in the High Score Modal
     displayHighScores(); // Update the High Score Modal with new scores
 
-    resetGame(); // Reset the game state
-    shuffleCards(); // Shuffle the cards for a new game
+    // Reset the game state and shuffle the cards
+    resetGame();
+    shuffleCards();
 
     // Hide the Win Modal after resetting the game
     $("#winModal").modal("hide");
@@ -247,27 +417,63 @@ function showWinModal(score) {
     startBackgroundMusic();
   }
 
-  // Remove any existing event listeners to avoid duplicates
-  playAgainButton.removeEventListener("click", playAgain); // Ensure old listeners are removed
+  // Remove the existing 'click' event listener (if any) to avoid duplicates
+  playAgainButton.removeEventListener("click", playAgain);
 
-  // Add a new event listener for the 'Play Again' button
+  // Add the new 'click' event listener for the "Play Again" button
   playAgainButton.addEventListener("click", playAgain);
 }
 
-// Function to show the game over modal
-function showGameOverModal() {
-  $("#gameOverModal").modal({
+// Function to show the Congratulations modal when the user completes the max level
+function showCongratulationsModal() {
+  const congratsSound = document.getElementById("congratsSound");
+
+  // Set the sound to loop until the user clicks 'Play Again'
+  congratsSound.loop = true;
+  congratsSound.play();
+
+  // Start the rain of emojis
+  rainOfEmojis();
+
+  // Stop background music if playing
+  stopBackgroundMusic();
+
+  // Show the Congratulations modal
+  $("#congratsModal").modal({
     backdrop: "static", // Prevent closing by clicking outside
     keyboard: false, // Disable closing via the ESC key
   });
 
-  const playAgainButton = document.getElementById(
-    "play-again-button-game-over"
-  );
+  const playAgainButton = document.getElementById("play-again-congrats");
 
-  // Clear previous event listener to prevent duplicates
-  playAgainButton.removeEventListener("click", playAgain);
-  playAgainButton.addEventListener("click", playAgain);
+  // Define the play again function after finishing the max level
+  function restartGame() {
+    currentLevel = 1; // Reset the game to level 1
+    document.getElementById("level-display").textContent = `${currentLevel}`; // Update the level display
+
+    // Stop the emoji rain
+    stopRainOfEmojis();
+
+    // Stop the congratulatory sound and reset its playback
+    congratsSound.pause();
+    congratsSound.currentTime = 0;
+    congratsSound.loop = false; // Stop the looping behavior
+
+    resetGame();
+    shuffleCards(); // Shuffle the cards for a new game
+
+    // Hide the Congratulations modal
+    $("#congratsModal").modal("hide");
+
+    // Start the background music
+    startBackgroundMusic();
+  }
+
+  // Remove any existing event listeners to avoid duplicates
+  playAgainButton.removeEventListener("click", restartGame);
+
+  // Add the new event listener for the 'Play Again' button
+  playAgainButton.addEventListener("click", restartGame);
 }
 
 // Function to handle game over scenario when the time runs out
@@ -284,6 +490,9 @@ function gameOver() {
 
 // Function to handle the "Play Again" action
 function playAgain() {
+  // Shuffle and refresh the card images to avoid repetition
+  refreshCardImages(); // Shuffle the images for a new set of cards
+
   resetGame(); // Reset the game state
   startBackgroundMusic();
   $("#gameOverModal").modal("hide"); // Hide the game over modal
