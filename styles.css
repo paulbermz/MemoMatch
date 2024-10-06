@@ -142,7 +142,6 @@ button {
   margin: 5px; /* Uniform spacing between buttons */
   flex: 1 1 calc(30% - 10px); /* Responsive buttons, 3 per row */
   min-width: 100px; /* Minimum width for buttons for better touch targets */
-  max-width: 150px; /* Maximum width to prevent buttons from being too large */
 }
 
 /* Hover effect */
