@@ -271,3 +271,27 @@ button:hover {
   margin-bottom: 5px;
 }
 
+.emoji-rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* Prevent interaction */
+  overflow: hidden;
+  z-index: 9999; /* Ensure it appears above everything else */
+}
+
+.emoji {
+  position: absolute;
+  top: -50px; /* Start above the visible screen */
+  font-size: 2rem; /* Emoji size */
+  opacity: 0.8;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh); /* Move emoji down by screen height */
+  }
+}
