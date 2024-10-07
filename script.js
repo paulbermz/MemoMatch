@@ -478,34 +478,48 @@ function showCongratulationsModal() {
 
 // Function to handle game over scenario when the time runs out
 function gameOver() {
-  stopBackgroundMusic();
-  stopTimer(); // Stop the timer
-  gameOverSound.play(); // Play the game over sound
+  stopBackgroundMusic(); // Stop any playing background music
+  stopTimer(); // Stop the timer since the game has ended
+  gameOverSound.play(); // Play the game over sound effect
 
-  // Show the game over modal after a brief delay
+  // Show the Game Over modal after a brief delay (1 second)
   setTimeout(() => {
     showGameOverModal();
-  }, 1000);
+  }, 1000); // Delay ensures sound plays before showing modal
 }
 
-// Function to handle the "Play Again" action
+// Function to show the Game Over modal
+function showGameOverModal() {
+  // Prevent closing the modal by clicking outside or using the ESC key
+  $("#gameOverModal").modal({
+    backdrop: "static", // Prevent closing by clicking outside
+    keyboard: false, // Disable closing via the ESC key
+  });
+}
+
+// Function to handle the "Play Again" action after Game Over
 function playAgain() {
   // Shuffle and refresh the card images to avoid repetition
   refreshCardImages(); // Shuffle the images for a new set of cards
 
-  resetGame(); // Reset the game state
+  resetGame(); // Reset the game state for a new game session
+
+  // Hide the Game Over modal when "Play Again" is clicked
+  $("#gameOverModal").modal("hide");
+
+  // Start the background music again for the new game session
   startBackgroundMusic();
-  $("#gameOverModal").modal("hide"); // Hide the game over modal
 }
 
-// Prevent closing the modal when clicking outside of it or using the keyboard
+// Prevent closing the Game Over modal when clicking outside or using the keyboard
 $("#gameOverModal")
   .on("show.bs.modal", function () {
-    $("body").css("overflow", "hidden"); // Prevent background scrolling
+    $("body").css("overflow", "hidden"); // Prevent background scrolling while modal is open
   })
   .on("hidden.bs.modal", function () {
-    $("body").css("overflow", ""); // Restore background scrolling when modal is closed
+    $("body").css("overflow", ""); // Restore background scrolling when the modal is closed
   });
+
 
 // Initialize the game board on page load
 window.onload = function () {
