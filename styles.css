@@ -184,32 +184,51 @@ button:hover {
 }
 
 .timer-and-moves {
-  padding: 10px; /* Slightly increased padding for better spacing */
-  margin-top: 15px; /* Create more space below the buttons */
-  text-align: center; /* Center-align for better layout */
-  font-size: 14px; /* Increase font size for better readability */
+  padding: 10px;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
   display: flex;
-  justify-content: space-between; /* Distribute time, moves, and level evenly on larger screens */
+  justify-content: space-between;
   flex-wrap: nowrap; /* Prevent wrapping on larger screens */
 }
 
-/* The p tags inside .timer-and-moves */
+/* Style the p elements inside .timer-and-moves */
 .timer-and-moves p {
-  margin: 5px 10px; /* Add margin for more spacing between elements */
-  font-size: 1em; /* Keep font size relative for better scaling */
+  display: flex;
+  justify-content: space-between; /* Distribute label and value */
+  align-items: center; /* Vertically center both label and value */
+  margin: 5px 10px;
+  font-size: 1em;
+  flex: 1; /* Allow each p to take up equal width */
+}
+
+/* Apply flexbox to ensure label and value are aligned separately */
+.timer-and-moves p span {
+  flex-grow: 1; /* Allow the label to take up available space */
+  text-align: left; /* Align the label to the left */
+}
+
+.timer-and-moves p .value {
+  text-align: right; /* Always align the numbers to the right */
 }
 
 /* Responsive layout for small screens */
 @media (max-width: 600px) {
   .timer-and-moves {
-    flex-direction: column; /* Stack items vertically on small screens */
-    align-items: center; /* Center-align items vertically */
-    justify-content: center; /* Center the content */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .timer-and-moves p {
-    margin: 10px 0; /* Adjust margin for spacing between the rows */
-    text-align: center; /* Ensure text is centered */
+    margin: 10px 0;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .timer-and-moves p .value {
+    text-align: right; /* Ensure the numbers are still right-aligned */
   }
 }
 
